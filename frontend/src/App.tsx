@@ -1,11 +1,8 @@
-
 import { useMemo, useState } from "react";
 import {
-  Activity,
   ArrowLeft,
   ArrowRight,
   BadgePercent,
-  Baby,
   ChevronDown,
   ChevronRight,
   Heart,
@@ -16,8 +13,8 @@ import {
   Search,
   ShieldCheck,
   ShoppingCart,
+  Sparkles,
   Stethoscope,
-  UserRound,
   X,
 } from "lucide-react";
 import "./index.css";
@@ -35,29 +32,6 @@ type Product = {
 };
 
 const products: Product[] = [
-  {
-    id: 1,
-    name: "Digital Blood Pressure Monitor",
-    category: "Medical Devices",
-    brand: "Health Essentials",
-    description: "Digital upper-arm monitor",
-    price: 1299,
-    mrp: 1799,
-    image:
-      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=500&q=80",
-    badge: "Bestseller",
-  },
-  {
-    id: 2,
-    name: "Digital Thermometer",
-    category: "Medical Devices",
-    brand: "Health Essentials",
-    description: "Easy-to-read digital display",
-    price: 249,
-    mrp: 399,
-    image:
-      "https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=500&q=80",
-  },
   {
     id: 3,
     name: "Daily Wellness Multivitamin",
@@ -80,6 +54,7 @@ const products: Product[] = [
     mrp: 349,
     image:
       "https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?auto=format&fit=crop&w=500&q=80",
+    badge: "Bestseller",
   },
   {
     id: 5,
@@ -93,18 +68,6 @@ const products: Product[] = [
       "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=500&q=80",
   },
   {
-    id: 6,
-    name: "Digital Glucose Monitor",
-    category: "Medical Devices",
-    brand: "Health Essentials",
-    description: "Home glucose testing device",
-    price: 899,
-    mrp: 1199,
-    image:
-      "https://images.unsplash.com/photo-1615486511484-92e172cc4fe0?auto=format&fit=crop&w=500&q=80",
-    badge: "Popular",
-  },
-  {
     id: 7,
     name: "Daily Sunscreen SPF 50",
     category: "Skin Care",
@@ -115,82 +78,24 @@ const products: Product[] = [
     image:
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=500&q=80",
   },
-  {
-    id: 8,
-    name: "First Aid Essentials Kit",
-    category: "First Aid",
-    brand: "Care Plus",
-    description: "Home first aid essentials",
-    price: 549,
-    mrp: 699,
-    image:
-      "https://images.unsplash.com/photo-1603398938378-e54eab446dde?auto=format&fit=crop&w=500&q=80",
-  },
-  {
-    id: 9,
-    name: "Gentle Baby Care Lotion",
-    category: "Baby Care",
-    brand: "Little Care",
-    description: "Gentle daily baby care",
-    price: 279,
-    mrp: 329,
-    image:
-      "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=500&q=80",
-  },
-  {
-    id: 10,
-    name: "Reusable Hot Water Bag",
-    category: "Personal Care",
-    brand: "Care Plus",
-    description: "Comfort and warmth",
-    price: 299,
-    mrp: 399,
-    image:
-      "https://images.unsplash.com/photo-1603398938378-e54eab446dde?auto=format&fit=crop&w=500&q=80",
-  },
-  {
-    id: 11,
-    name: "Gentle Body Lotion",
-    category: "Personal Care",
-    brand: "Daily Wellness",
-    description: "Everyday skin moisturising",
-    price: 249,
-    mrp: 299,
-    image:
-      "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=500&q=80",
-  },
-  {
-    id: 12,
-    name: "Portable Pulse Oximeter",
-    category: "Medical Devices",
-    brand: "Health Essentials",
-    description: "Fingertip oxygen monitor",
-    price: 799,
-    mrp: 999,
-    image:
-      "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=500&q=80",
-  },
 ];
 
 const categories = [
   { name: "Medicines", icon: Pill, color: "#eaf2ff" },
-  { name: "Health Devices", icon: Activity, color: "#e8f8f0" },
   { name: "Vitamins & Nutrition", icon: Heart, color: "#fff0e7" },
-  { name: "Skin Care", icon: ShieldCheck, color: "#f9eafa" },
-  { name: "Baby Care", icon: Baby, color: "#fff4d9" },
-  { name: "First Aid", icon: PackageCheck, color: "#e8f7fa" },
+  { name: "Skin Care", icon: Sparkles, color: "#fcefe8" },
 ];
 
 const banners = [
   {
-    eyebrow: "WELCOME TO IHEALTHY BIO",
+    eyebrow: "WELCOME TO IHEALTHY",
     title: "Your health,",
     highlight: "our priority.",
     description:
-      "Discover everyday healthcare essentials, wellness products and trusted health devices.",
+      "Discover everyday healthcare essentials, wellness products and trusted skin care solutions.",
     button: "Shop health essentials",
     background: "banner-one",
-    category: "Medical Devices",
+    category: "Skin Care",
   },
   {
     eyebrow: "CARE FOR YOURSELF",
@@ -200,28 +105,18 @@ const banners = [
       "Explore personal care, daily wellness essentials and products for the whole family.",
     button: "Explore wellness",
     background: "banner-two",
-    category: "Personal Care",
+    category: "Skin Care",
   },
   {
     eyebrow: "EVERYDAY HEALTHCARE",
     title: "Small steps,",
     highlight: "healthier days.",
     description:
-      "Find useful health devices and everyday essentials for your home.",
+      "Find useful nutrition and skincare essentials for your everyday routine.",
     button: "Discover products",
     background: "banner-three",
-    category: "Medical Devices",
+    category: "Vitamins & Nutrition",
   },
-];
-
-const brandNames = [
-  "Health Essentials",
-  "Daily Wellness",
-  "Derma Care",
-  "Care Plus",
-  "Little Care",
-  "Nature's Care",
-  "Active Life",
 ];
 
 const formatPrice = (price: number) =>
@@ -251,10 +146,7 @@ function App() {
         product.brand.toLowerCase().includes(query);
 
       const matchesCategory =
-        activeCategory === "All" ||
-        product.category === activeCategory ||
-        (activeCategory === "Health Devices" &&
-          product.category === "Medical Devices");
+        activeCategory === "All" || product.category === activeCategory;
 
       return matchesSearch && matchesCategory;
     });
@@ -287,11 +179,22 @@ function App() {
   function chooseCategory(category: string) {
     setActiveCategory(category);
     setSearch("");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    window.setTimeout(() => {
+      const targetId = category === "All" ? "bestsellers" : "results-heading";
+      const target = document.getElementById(targetId);
+
+      if (target) {
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 50);
   }
 
   function scrollRow(id: string, direction: "left" | "right") {
-    document.getElementById(id)?.scrollBy({
+    document.getElementById(`${id}-row`)?.scrollBy({
       left: direction === "left" ? -650 : 650,
       behavior: "smooth",
     });
@@ -383,7 +286,7 @@ function App() {
     if (items.length === 0) return null;
 
     return (
-      <section className="product-section">
+      <section className="product-section" id={id}>
         <div className="section-heading">
           <div>
             <h2>{title}</h2>
@@ -405,7 +308,7 @@ function App() {
           </div>
         </div>
 
-        <div className="product-row" id={id}>
+        <div className="product-row" id={`${id}-row`}>
           {items.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -419,40 +322,20 @@ function App() {
       title: "Bestsellers for your health",
       subtitle: "Everyday essentials picked for you",
       id: "bestsellers",
-      items: visibleProducts.filter((p) =>
-        [1, 2, 3, 6, 8, 12].includes(p.id),
-      ),
-    },
-    {
-      title: "Personal care favourites",
-      subtitle: "Feel good with everyday care",
-      id: "personal-care",
-      items: visibleProducts.filter((p) =>
-        ["Skin Care", "Personal Care"].includes(p.category),
-      ),
-    },
-    {
-      title: "Health devices for your home",
-      subtitle: "Useful essentials for monitoring your health",
-      id: "health-devices",
-      items: visibleProducts.filter(
-        (p) => p.category === "Medical Devices",
-      ),
+      items: visibleProducts.filter((p) => [3, 4, 5, 7].includes(p.id)),
     },
     {
       title: "Care for the whole family",
-      subtitle: "Practical everyday essentials",
+      subtitle: "Practical everyday skincare and wellness essentials",
       id: "family-care",
-      items: visibleProducts.filter((p) =>
-        ["Baby Care", "First Aid", "Personal Care"].includes(p.category),
-      ),
+      items: visibleProducts.filter((p) => p.category === "Skin Care"),
     },
   ];
 
   return (
     <div className="app-shell">
       <div className="top-strip">
-        <span>Welcome to iHealthy Bio</span>
+        <span>Welcome to iHealthy</span>
         <span>Everyday healthcare, made simpler</span>
         <a href="#footer">Need help?</a>
       </div>
@@ -470,14 +353,13 @@ function App() {
           <a
             href="#home"
             className="brand"
-            aria-label="iHealthy Bio homepage"
+            aria-label="iHealthy homepage"
           >
-            <span className="brand-mark">
-              <Heart size={24} fill="currentColor" />
-              <span className="brand-cross">+</span>
+            <span className="brand-mark-svg">
+              <img src="/iHealthy Asset.png" alt="iHealthy Logo" style={{ height: "95px", width: "auto" }} />
             </span>
             <span className="brand-copy">
-              <strong>iHealthy <em>Bio</em></strong>
+              <strong>iHealthy</strong>
               <small>YOUR HEALTH, OUR PRIORITY</small>
             </span>
           </a>
@@ -530,16 +412,6 @@ function App() {
           </form>
 
           <button
-            className="account-button"
-            onClick={() =>
-              setNotice("Customer login will be connected in a later step.")
-            }
-          >
-            <UserRound size={21} />
-            <span>Login</span>
-          </button>
-
-          <button
             className="cart-button"
             onClick={() => {
               const summary = products
@@ -582,12 +454,6 @@ function App() {
               onClick={() => setMobileMenu(false)}
             >
               Health products
-            </a>
-            <a
-              href="#brands"
-              onClick={() => setMobileMenu(false)}
-            >
-              Brands
             </a>
             <a
               href="#doctors"
@@ -636,7 +502,7 @@ function App() {
                 <span>Health first</span>
               </div>
               <div className="hero-floating floating-two">
-                <Activity size={25} />
+                <Sparkles size={25} />
                 <span>Wellness daily</span>
               </div>
             </div>
@@ -733,37 +599,8 @@ function App() {
             </div>
           </section>
 
-          <section className="brand-section" id="brands">
-            <div className="section-heading">
-              <div>
-                <h2>Explore our featured brands</h2>
-                <p>Discover our demo healthcare collections</p>
-              </div>
-            </div>
-
-            <div className="brand-grid">
-              {brandNames.map((brand, index) => (
-                <button
-                  key={brand}
-                  className="brand-tile"
-                  onClick={() => {
-                    setSearch(brand);
-                    setActiveCategory("All");
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                  }}
-                >
-                  <span className={`brand-tile-icon brand-tone-${index}`}>
-                    {brand.split(" ").map((word) => word[0]).join("")}
-                  </span>
-                  <strong>{brand}</strong>
-                  <span>Explore range</span>
-                </button>
-              ))}
-            </div>
-          </section>
-
           {(search || activeCategory !== "All") && (
-            <section className="search-results">
+            <section className="search-results" id="results-heading">
               <div className="section-heading">
                 <div>
                   <h2>
@@ -852,7 +689,7 @@ function App() {
             <div>
               <h2>Stay informed. Stay well.</h2>
               <p>
-                Subscribe to receive iHealthy Bio news and wellness updates.
+                Subscribe to receive iHealthy news and wellness updates.
               </p>
             </div>
             <form
@@ -881,12 +718,11 @@ function App() {
           <div className="footer-main">
             <div className="footer-brand">
               <a href="#home" className="brand">
-                <span className="brand-mark">
-                  <Heart size={24} fill="currentColor" />
-                  <span className="brand-cross">+</span>
+                <span className="brand-mark-svg">
+                  <img src="/iHealthy Asset.png" alt="iHealthy Logo" style={{ height: "95px", width: "auto" }} />
                 </span>
                 <span className="brand-copy">
-                  <strong>iHealthy <em>Bio</em></strong>
+                  <strong>iHealthy</strong>
                   <small>YOUR HEALTH, OUR PRIORITY</small>
                 </span>
               </a>
@@ -898,14 +734,13 @@ function App() {
 
             <div className="footer-column">
               <h3>Shop</h3>
-              <a href="#categories">Health devices</a>
-              <a href="#categories">Personal care</a>
+              <a href="#categories">Skin care</a>
               <a href="#categories">Vitamins & nutrition</a>
               <a href="#bestsellers">Featured products</a>
             </div>
 
             <div className="footer-column">
-              <h3>iHealthy Bio</h3>
+              <h3>iHealthy</h3>
               <a href="#home">About us</a>
               <a href="#doctors">Healthcare professionals</a>
               <a href="#footer">Contact us</a>
@@ -933,7 +768,7 @@ function App() {
           </div>
 
           <div className="footer-bottom">
-            <span>© {new Date().getFullYear()} iHealthy Bio. All rights reserved.</span>
+            <span>© {new Date().getFullYear()} iHealthy. All rights reserved.</span>
             <span>Built for better everyday health.</span>
           </div>
         </div>
