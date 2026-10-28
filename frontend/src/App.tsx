@@ -2,9 +2,9 @@ import { useMemo, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
-  BadgePercent,
   ChevronDown,
   ChevronRight,
+  Crosshair,
   Heart,
   MapPin,
   Menu,
@@ -16,6 +16,7 @@ import {
   Sparkles,
   Stethoscope,
   X,
+  CheckCircle2,
 } from "lucide-react";
 import "./index.css";
 
@@ -53,7 +54,7 @@ const products: Product[] = [
     price: 299,
     mrp: 349,
     image:
-      "https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?auto=format&fit=crop&w=500&q=80",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1VF-TmOJmk2UhFWW4dOwsjgpv40nE04EnvrLUalV2fw&s=10",
     badge: "Bestseller",
   },
   {
@@ -65,7 +66,7 @@ const products: Product[] = [
     price: 349,
     mrp: 449,
     image:
-      "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=500&q=80",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrfef7fspS7m8OW31fJHhn3TxV5zDUeOtkvK2gL1siAw&s=10",
   },
   {
     id: 7,
@@ -76,8 +77,16 @@ const products: Product[] = [
     price: 499,
     mrp: 599,
     image:
-      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=500&q=80",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNGSqcWi4NsKik7k7LwmhdGoyBAzpsI0AjNnIr54X0Yg&s=10",
   },
+];
+
+const indianCities = [
+  "New Delhi", "Mumbai", "Bengaluru", "Hyderabad", "Chennai", 
+  "Kolkata", "Ahmedabad", "Pune", "Jaipur", "Lucknow", 
+  "Bhubaneswar", "Patna", "Chandigarh", "Kochi", "Indore", 
+  "Bhopal", "Guwahati", "Visakhapatnam", "Surat", "Varanasi",
+  "Nagpur", "Coimbatore", "Vadodara", "Ludhiana", "Agra"
 ];
 
 const categories = [
@@ -88,14 +97,36 @@ const categories = [
 
 const banners = [
   {
+    eyebrow: "AI HEALTH SCANNER",
+    title: "Scan your health,",
+    highlight: "track your vitals.",
+    description:
+      "Use our advanced facial scanning technology to instantly check your vital health results and wellbeing metrics.",
+    button: "Start Health Scan",
+    background: "banner-one",
+    link: "https://ihealthy-bio.netlify.app/",
+    isExternalLink: true,
+  },
+  {
+    eyebrow: "DISCOVER IHEALTHY",
+    title: "Know more about",
+    highlight: "our facial scan site.",
+    description:
+      "Explore how our cutting-edge AI technology measures health vitals quickly, safely, and accurately through your device camera.",
+    button: "Learn More",
+    background: "banner-two",
+    link: "https://ihealthy.vercel.app/",
+    isExternalLink: true,
+  },
+  {
     eyebrow: "WELCOME TO IHEALTHY",
     title: "Your health,",
     highlight: "our priority.",
     description:
-      "Discover everyday healthcare essentials, wellness products and trusted skin care solutions.",
-    button: "Shop health essentials",
-    background: "banner-one",
-    category: "Skin Care",
+      "Discover everyday healthcare essentials, wellness products and trusted skin care solutions across India.",
+    button: "Shop Health Essentials",
+    background: "banner-three",
+    category: "Medicines",
   },
   {
     eyebrow: "CARE FOR YOURSELF",
@@ -103,19 +134,9 @@ const banners = [
     highlight: "with you.",
     description:
       "Explore personal care, daily wellness essentials and products for the whole family.",
-    button: "Explore wellness",
-    background: "banner-two",
+    button: "Explore Wellness",
+    background: "banner-one",
     category: "Skin Care",
-  },
-  {
-    eyebrow: "EVERYDAY HEALTHCARE",
-    title: "Small steps,",
-    highlight: "healthier days.",
-    description:
-      "Find useful nutrition and skincare essentials for your everyday routine.",
-    button: "Discover products",
-    background: "banner-three",
-    category: "Vitamins & Nutrition",
   },
 ];
 
@@ -129,11 +150,40 @@ function App() {
   const [slide, setSlide] = useState(0);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [notice, setNotice] = useState("");
+  
+  // Cart & Checkout Drawer States
+  const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
+  const [checkoutStep, setCheckoutStep] = useState<"cart" | "form" | "success">("cart");
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    address: "",
+    city: "Bhubaneswar",
+    pincode: "",
+    paymentMethod: "cod"
+  });
+
+  // Location States
+  const [locationModalOpen, setLocationModalOpen] = useState(false);
+  const [currentLocation, setCurrentLocation] = useState("Bhubaneswar");
+  const [citySearch, setCitySearch] = useState("");
+
+  const filteredCities = useMemo(() => {
+    const q = citySearch.trim().toLowerCase();
+    if (!q) return indianCities;
+    return indianCities.filter((city) => city.toLowerCase().includes(q));
+  }, [citySearch]);
 
   const cartCount = Object.values(cart).reduce(
     (total, quantity) => total + quantity,
     0,
   );
+
+  const cartSubtotal = useMemo(() => {
+    return products.reduce((sum, product) => {
+      return sum + product.price * (cart[product.id] || 0);
+    }, 0);
+  }, [cart]);
 
   const visibleProducts = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -151,6 +201,43 @@ function App() {
       return matchesSearch && matchesCategory;
     });
   }, [search, activeCategory]);
+
+  function detectUserLocation() {
+    if (!navigator.geolocation) {
+      setNotice("Geolocation is not supported by your browser");
+      return;
+    }
+    setNotice("Detecting your location...");
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const { latitude, longitude } = position.coords;
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+          );
+          const data = await response.json();
+          const city =
+            data.address.city ||
+            data.address.town ||
+            data.address.state_district ||
+            data.address.state ||
+            "Current Location";
+          setCurrentLocation(city);
+          setLocationModalOpen(false);
+          setNotice(`Location set to ${city}`);
+          window.setTimeout(() => setNotice(""), 2500);
+        } catch {
+          setCurrentLocation("Detected Location");
+          setLocationModalOpen(false);
+          setNotice("Location detected successfully!");
+          window.setTimeout(() => setNotice(""), 2500);
+        }
+      },
+      () => {
+        setNotice("Unable to retrieve your location. Please select manually.");
+      }
+    );
+  }
 
   function addToCart(product: Product) {
     setCart((current) => ({
@@ -336,7 +423,7 @@ function App() {
     <div className="app-shell">
       <div className="top-strip">
         <span>Welcome to iHealthy</span>
-        <span>Everyday healthcare, made simpler</span>
+        <span>Everyday healthcare across India</span>
         <a href="#footer">Need help?</a>
       </div>
 
@@ -366,14 +453,12 @@ function App() {
 
           <button
             className="location-button"
-            onClick={() =>
-              setNotice("Location selection will be connected in a later step.")
-            }
+            onClick={() => setLocationModalOpen(true)}
           >
             <MapPin size={19} />
             <span>
               <small>Deliver to</small>
-              <strong>Select location</strong>
+              <strong>{currentLocation}</strong>
             </span>
             <ChevronDown size={15} />
           </button>
@@ -414,22 +499,8 @@ function App() {
           <button
             className="cart-button"
             onClick={() => {
-              const summary = products
-                .filter((p) => cart[p.id])
-                .map((p) => `${p.name} × ${cart[p.id]}`)
-                .join("\n");
-
-              setNotice(
-                summary
-                  ? `Your cart:\n${summary}\nTotal: ${formatPrice(
-                      products.reduce(
-                        (sum, p) => sum + p.price * (cart[p.id] || 0),
-                        0,
-                      ),
-                    )}`
-                  : "Your cart is empty. Add a product to get started.",
-              );
-              window.setTimeout(() => setNotice(""), 5000);
+              setCheckoutStep("cart");
+              setCartDrawerOpen(true);
             }}
           >
             <ShoppingCart size={22} />
@@ -439,34 +510,43 @@ function App() {
         </div>
 
         <nav className={`main-nav ${mobileMenu ? "nav-open" : ""}`}>
-          <div className="page-container nav-inner">
-            <a href="#home" onClick={() => setMobileMenu(false)}>
-              Home
-            </a>
-            <a
-              href="#categories"
-              onClick={() => setMobileMenu(false)}
-            >
-              Shop by category
-            </a>
-            <a
-              href="#bestsellers"
-              onClick={() => setMobileMenu(false)}
-            >
-              Health products
-            </a>
-            <a
-              href="#doctors"
-              onClick={() => setMobileMenu(false)}
-            >
-              Find a doctor
-            </a>
-            <a href="#footer" onClick={() => setMobileMenu(false)}>
-              About us
-            </a>
-            <span className="nav-promo">
-              <BadgePercent size={16} /> Offers
-            </span>
+          <div className="page-container nav-inner nav-flex-container">
+            <div className="nav-left-links">
+              <a href="#home" onClick={() => setMobileMenu(false)}>
+                Home
+              </a>
+              <a href="#categories" onClick={() => setMobileMenu(false)}>
+                Shop by category
+              </a>
+              <a href="#bestsellers" onClick={() => setMobileMenu(false)}>
+                Health products
+              </a>
+              <a href="#doctors" onClick={() => setMobileMenu(false)}>
+                Find a doctor
+              </a>
+              <a href="#footer" onClick={() => setMobileMenu(false)}>
+                About us
+              </a>
+            </div>
+
+            <div className="nav-right-links">
+              <a
+                href="https://ihealthy-bio.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="nav-external-btn"
+              >
+                Start Health Scan
+              </a>
+              <a
+                href="https://ihealthy.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="nav-external-btn"
+              >
+                Explore Products
+              </a>
+            </div>
           </div>
         </nav>
       </header>
@@ -484,7 +564,13 @@ function App() {
               <p>{currentBanner.description}</p>
               <button
                 className="primary-button"
-                onClick={() => chooseCategory(currentBanner.category)}
+                onClick={() => {
+                  if (currentBanner.isExternalLink && currentBanner.link) {
+                    window.open(currentBanner.link, "_blank");
+                  } else if (currentBanner.category) {
+                    chooseCategory(currentBanner.category);
+                  }
+                }}
               >
                 {currentBanner.button} <ChevronRight size={18} />
               </button>
@@ -548,8 +634,8 @@ function App() {
             <div>
               <PackageCheck size={23} />
               <span>
-                <strong>Easy shopping</strong>
-                <small>Simple, convenient browsing</small>
+                <strong>Pan-India Delivery</strong>
+                <small>Reaching every corner of India</small>
               </span>
             </div>
             <div>
@@ -713,6 +799,250 @@ function App() {
         </div>
       </main>
 
+      {/* Cart & Checkout Slide-Over Drawer / Page Modal */}
+      {cartDrawerOpen && (
+        <div className="modal-overlay" onClick={() => setCartDrawerOpen(false)}>
+          <div className="cart-drawer" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>
+                {checkoutStep === "cart" && `Your Shopping Cart (${cartCount})`}
+                {checkoutStep === "form" && "Checkout & Delivery"}
+                {checkoutStep === "success" && "Order Successful!"}
+              </h3>
+              <button
+                className="modal-close"
+                onClick={() => setCartDrawerOpen(false)}
+                aria-label="Close cart"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="cart-drawer-body">
+              {checkoutStep === "cart" && (
+                <>
+                  {cartCount === 0 ? (
+                    <div className="empty-cart-state">
+                      <ShoppingCart size={48} />
+                      <h4>Your cart is empty</h4>
+                      <p>Add some health essentials to get started.</p>
+                      <button
+                        className="primary-button"
+                        onClick={() => setCartDrawerOpen(false)}
+                      >
+                        Start Shopping
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="cart-items-list">
+                      {products
+                        .filter((p) => cart[p.id] > 0)
+                        .map((product) => (
+                          <div key={product.id} className="cart-item-row">
+                            <img src={product.image} alt={product.name} />
+                            <div className="cart-item-details">
+                              <h4>{product.name}</h4>
+                              <span className="cart-item-price">
+                                {formatPrice(product.price)}
+                              </span>
+                            </div>
+                            <div className="quantity-control">
+                              <button onClick={() => changeQuantity(product.id, -1)}>
+                                −
+                              </button>
+                              <span>{cart[product.id]}</span>
+                              <button onClick={() => changeQuantity(product.id, 1)}>
+                                +
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                </>
+              )}
+
+              {checkoutStep === "form" && (
+                <form
+                  className="checkout-form"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setCheckoutStep("success");
+                    setCart({}); // Clear cart on success
+                  }}
+                >
+                  <div className="form-group">
+                    <label>Full Name</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Rojalin Rout"
+                      value={formData.name}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Phone Number</label>
+                    <input
+                      type="tel"
+                      required
+                      placeholder="+91 98765 43210"
+                      value={formData.phone}
+                      onChange={(e) =>
+                        setFormData({ ...formData, phone: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Delivery Address</label>
+                    <textarea
+                      required
+                      rows={2}
+                      placeholder="House/Flat no., Street name"
+                      value={formData.address}
+                      onChange={(e) =>
+                        setFormData({ ...formData, address: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label>City</label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.city}
+                        onChange={(e) =>
+                          setFormData({ ...formData, city: e.target.value })
+                        }
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Pincode</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="751001"
+                        value={formData.pincode}
+                        onChange={(e) =>
+                          setFormData({ ...formData, pincode: e.target.value })
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label>Payment Method</label>
+                    <select
+                      value={formData.paymentMethod}
+                      onChange={(e) =>
+                        setFormData({ ...formData, paymentMethod: e.target.value })
+                      }
+                    >
+                      <option value="cod">Cash on Delivery (COD)</option>
+                      <option value="upi">UPI / Google Pay / PhonePe</option>
+                      <option value="card">Credit / Debit Card</option>
+                    </select>
+                  </div>
+                  <button type="submit" className="primary-button checkout-submit-btn">
+                    Place Order ({formatPrice(cartSubtotal)})
+                  </button>
+                </form>
+              )}
+
+              {checkoutStep === "success" && (
+                <div className="order-success-state">
+                  <CheckCircle2 size={64} color="#3eb544" />
+                  <h3>Order Placed Successfully!</h3>
+                  <p>
+                    Thank you for shopping with iHealthy. Your health essentials are on the way to <strong>{formData.city}</strong>.
+                  </p>
+                  <button
+                    className="primary-button"
+                    onClick={() => setCartDrawerOpen(false)}
+                  >
+                    Continue Shopping
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {checkoutStep === "cart" && cartCount > 0 && (
+              <div className="cart-drawer-footer">
+                <div className="cart-total-row">
+                  <span>Subtotal:</span>
+                  <strong>{formatPrice(cartSubtotal)}</strong>
+                </div>
+                <button
+                  className="primary-button checkout-btn"
+                  onClick={() => setCheckoutStep("form")}
+                >
+                  Proceed to Checkout <ChevronRight size={18} />
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Location Selection Modal */}
+      {locationModalOpen && (
+        <div className="modal-overlay" onClick={() => setLocationModalOpen(false)}>
+          <div className="location-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>Choose your delivery location</h3>
+              <button
+                className="modal-close"
+                onClick={() => setLocationModalOpen(false)}
+                aria-label="Close modal"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="modal-body">
+              <button
+                className="detect-location-btn"
+                onClick={detectUserLocation}
+              >
+                <Crosshair size={18} />
+                <span>Detect my current location (GPS)</span>
+              </button>
+
+              <input
+                type="text"
+                className="location-search-input"
+                placeholder="Search city across India (e.g. Mumbai, Delhi...)"
+                value={citySearch}
+                onChange={(e) => setCitySearch(e.target.value)}
+              />
+
+              <span className="city-list-title">Popular Cities across India</span>
+
+              <div className="city-grid">
+                {filteredCities.map((city) => (
+                  <button
+                    key={city}
+                    className={`city-chip ${
+                      currentLocation === city ? "active" : ""
+                    }`}
+                    onClick={() => {
+                      setCurrentLocation(city);
+                      setLocationModalOpen(false);
+                      setNotice(`Delivery location set to ${city}`);
+                      window.setTimeout(() => setNotice(""), 2500);
+                    }}
+                  >
+                    {city}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <footer className="site-footer" id="footer">
         <div className="page-container">
           <div className="footer-main">
@@ -728,7 +1058,7 @@ function App() {
               </a>
               <p>
                 Your destination for everyday health products, wellness
-                essentials and convenient healthcare information.
+                essentials and convenient healthcare information across India.
               </p>
             </div>
 
