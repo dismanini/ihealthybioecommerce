@@ -31,16 +31,19 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 180px;
+  scroll-padding-top: 140px;
 }
 
 body {
   margin: 0;
   min-width: 320px;
+  overflow-x: hidden;
 }
 
 button,
-input {
+input,
+textarea,
+select {
   font: inherit;
 }
 
@@ -60,7 +63,9 @@ a {
 
 button:focus-visible,
 a:focus-visible,
-input:focus-visible {
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
   outline: 3px solid #52d659;
   outline-offset: 3px;
 }
@@ -76,13 +81,13 @@ button:disabled {
 }
 
 .page-container {
-  width: min(var(--page), calc(100% - 48px));
+  width: min(var(--page), calc(100% - 32px));
   margin-inline: auto;
 }
 
 .top-strip {
   min-height: 30px;
-  padding: 6px 24px;
+  padding: 6px 16px;
   background: #f0f5fa;
   color: #3b4d61;
   display: flex;
@@ -90,11 +95,17 @@ button:disabled {
   align-items: center;
   gap: 24px;
   font-size: 11px;
+  text-align: center;
+}
+
+.top-strip span:nth-child(2) {
+  display: inline-block;
 }
 
 .top-strip a {
   color: var(--primary);
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .site-header {
@@ -109,7 +120,7 @@ button:disabled {
   min-height: 86px;
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 16px;
 }
 
 .brand {
@@ -129,6 +140,8 @@ button:disabled {
 .brand-mark-svg img {
   object-fit: contain;
   display: block;
+  height: 75px !important;
+  width: auto;
 }
 
 .brand-copy {
@@ -141,14 +154,9 @@ button:disabled {
 .brand-copy strong {
   font-family: "Manrope", sans-serif;
   color: var(--primary);
-  font-size: 21px;
+  font-size: 20px;
   letter-spacing: -1px;
   font-weight: 800;
-}
-
-.brand-copy em {
-  color: var(--accent);
-  font-style: normal;
 }
 
 .brand-copy small {
@@ -167,6 +175,7 @@ button:disabled {
   color: var(--primary);
   padding: 9px 0;
   flex: 0 0 auto;
+  cursor: pointer;
 }
 
 .location-button span {
@@ -246,6 +255,7 @@ button:disabled {
   border: 0;
   background: transparent;
   color: #8792a1;
+  cursor: pointer;
 }
 
 .account-button,
@@ -261,6 +271,7 @@ button:disabled {
   font-size: 12px;
   font-weight: 600;
   white-space: nowrap;
+  cursor: pointer;
 }
 
 .account-button svg,
@@ -311,7 +322,7 @@ button:disabled {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: min(var(--page), calc(100% - 48px));
+  width: min(var(--page), calc(100% - 32px));
   margin-inline: auto;
 }
 
@@ -402,7 +413,7 @@ button:disabled {
   margin: 14px 0 12px;
   color: var(--primary);
   font-family: "Manrope", sans-serif;
-  font-size: clamp(32px, 4vw, 47px);
+  font-size: clamp(28px, 4vw, 47px);
   line-height: 1.17;
   letter-spacing: -1.8px;
 }
@@ -413,7 +424,7 @@ button:disabled {
 
 .hero-copy > p {
   max-width: 420px;
-  margin: 0 0 10px;
+  margin: 0 0 16px;
   color: #586678;
   font-size: 13px;
   line-height: 1.8;
@@ -518,7 +529,7 @@ button:disabled {
 .hero-controls {
   position: absolute;
   z-index: 3;
-  bottom: 6px;
+  bottom: 12px;
   left: 54px;
   display: flex;
   align-items: center;
@@ -554,10 +565,11 @@ button:disabled {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin: 18px 0 38px;
-  padding: 17px 25px;
+  padding: 17px 20px;
   border: 1px solid var(--border);
   border-radius: 9px;
   background: #ffffff;
+  gap: 10px;
 }
 
 .trust-strip > div {
@@ -565,7 +577,7 @@ button:disabled {
   justify-content: center;
   align-items: center;
   gap: 12px;
-  padding: 3px 14px;
+  padding: 3px 10px;
 }
 
 .trust-strip > div + div {
@@ -1424,4 +1436,185 @@ button:disabled {
 @keyframes slideInRight {
   from { transform: translateX(100%); }
   to { transform: translateX(0); }
+}
+
+/* =========================================================
+   RESPONSIVE MEDIA QUERIES FOR MOBILE & TABLETS
+   ========================================================= */
+
+@media (max-width: 1024px) {
+  .header-main {
+    flex-wrap: wrap;
+    padding: 12px 0;
+    gap: 12px;
+  }
+
+  .mobile-menu-button {
+    display: inline-flex;
+  }
+
+  .search-box {
+    order: 3;
+    flex: 1 1 100%;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .footer-main {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    width: min(var(--page), calc(100% - 20px));
+  }
+
+  .top-strip {
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    text-align: center;
+  }
+
+  .location-button {
+    display: none; /* Hide on small mobile to save header space, or keep compact */
+  }
+
+  .main-nav {
+    display: none;
+  }
+
+  .main-nav.nav-open {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--primary);
+    box-shadow: 0 10px 25px rgba(11, 37, 58, 0.2);
+    border-bottom: 2px solid var(--accent);
+  }
+
+  .nav-flex-container {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px 20px;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .nav-left-links,
+  .nav-right-links {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .nav-inner a {
+    text-align: center;
+    padding: 10px 14px;
+  }
+
+  .hero {
+    padding: 24px 20px;
+    min-height: 280px;
+    flex-direction: column;
+  }
+
+  .hero-art {
+    display: none; /* Hide decorative floating graphics on small screens */
+  }
+
+  .hero-copy {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .hero-copy > p {
+    margin-inline: auto;
+  }
+
+  .hero-controls {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 14px;
+  }
+
+  .trust-strip {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .trust-strip > div + div {
+    border-left: none;
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .filtered-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .product-card {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .doctor-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .newsletter {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .newsletter-form {
+    width: 100%;
+  }
+
+  .footer-main {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding: 30px 0 20px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .city-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .filtered-product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
 }
