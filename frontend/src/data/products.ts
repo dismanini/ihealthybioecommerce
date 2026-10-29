@@ -125,7 +125,7 @@ export const banners: Banner[] = [
       "Use our advanced facial scanning technology to instantly check your vital health results and wellbeing metrics.",
     button: "Start Health Scan",
     background: "banner-one",
-    link: "https://ihealthy-bio.netlify.app/",
+    link: "https://ihealthybio.com/",
     isExternalLink: true,
   },
   {

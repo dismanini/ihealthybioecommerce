@@ -529,7 +529,7 @@ button:disabled {
 .hero-controls {
   position: absolute;
   z-index: 3;
-  bottom: 12px;
+  bottom: 6px;
   left: 54px;
   display: flex;
   align-items: center;

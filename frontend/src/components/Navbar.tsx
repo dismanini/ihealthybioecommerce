@@ -145,7 +145,7 @@ export default function Navbar({
 
             <div className="nav-right-links">
               <a
-                href="https://ihealthy-bio.netlify.app/"
+                href="https://ihealthybio.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="nav-external-btn"
