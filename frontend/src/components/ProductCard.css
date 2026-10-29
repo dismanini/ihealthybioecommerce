@@ -1,0 +1,148 @@
+
+/* ProductCard.css */
+
+.product-card {
+  flex: 0 0 235px;
+  min-width: 0;
+}
+
+.product-image-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 180px;
+  padding: 12px;
+  overflow: hidden;
+  background: #f7f9fb;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.25s ease;
+}
+
+.product-image-button:hover .product-image {
+  transform: scale(1.05);
+}
+
+.product-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  padding: 5px 9px;
+  color: var(--primary);
+  background: var(--accent-light);
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.product-info {
+  padding: 13px 3px;
+}
+
+.product-brand {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.product-info h3 {
+  margin: 0 0 6px;
+  color: var(--primary);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.product-description {
+  min-height: 18px;
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.product-prices {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 13px;
+}
+
+.product-prices strong {
+  color: var(--primary);
+  font-size: 16px;
+}
+
+.product-prices .mrp {
+  color: var(--muted);
+  font-size: 12px;
+  text-decoration: line-through;
+}
+
+.product-prices .discount {
+  color: #278d37;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.add-button {
+  width: 100%;
+  min-height: 38px;
+  padding: 9px 12px;
+  color: var(--primary);
+  background: white;
+  border: 1px solid var(--accent-dark);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.add-button:hover {
+  background: var(--accent-light);
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 38px;
+  padding: 3px 8px;
+  border: 1px solid var(--accent-dark);
+  border-radius: 8px;
+}
+
+.quantity-control button {
+  min-width: 30px;
+  min-height: 30px;
+  color: var(--primary);
+  background: transparent;
+  border: 0;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.quantity-control span {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .product-card {
+    flex-basis: 190px;
+  }
+
+  .product-image-button {
+    height: 155px;
+  }
+}

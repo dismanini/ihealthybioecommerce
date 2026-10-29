@@ -1,0 +1,61 @@
+
+/* Product section layout */
+.product-section {
+  margin: 36px 0;
+}
+
+.product-section .section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.product-section .section-heading h2 {
+  margin: 0 0 6px;
+}
+
+.product-section .section-heading p {
+  margin: 0;
+}
+
+.product-section .row-controls {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.product-section .row-controls button {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #dce5df;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+}
+
+.product-section .product-row {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 4px 2px 14px;
+  scrollbar-width: thin;
+}
+
+.product-section .product-row > * {
+  flex: 0 0 230px;
+}
+
+@media (max-width: 600px) {
+  .product-section .section-heading {
+    align-items: flex-start;
+  }
+
+  .product-section .product-row > * {
+    flex-basis: 190px;
+  }
+}

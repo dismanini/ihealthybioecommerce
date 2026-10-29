@@ -1,0 +1,409 @@
+
+/* ==================================
+   iHealthy Bio - Shipping Policy
+================================== */
+
+.shipping-page {
+  min-height: 100vh;
+  background: #fff;
+  color: #183b35;
+}
+
+.shipping-container {
+  width: min(1050px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+/* Hero section */
+
+.shipping-hero {
+  padding: 68px 0 72px;
+  text-align: center;
+  background:
+    radial-gradient(
+      circle at 82% 20%,
+      rgba(92, 190, 151, 0.18),
+      transparent 30%
+    ),
+    linear-gradient(135deg, #eef9f3, #f9fcfa 55%, #e7f5ee);
+}
+
+.shipping-hero-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  height: 62px;
+  margin: 0 auto 22px;
+  border-radius: 17px;
+  background: #d9f1e3;
+  color: #13865e;
+}
+
+.shipping-eyebrow {
+  display: inline-block;
+  margin-bottom: 13px;
+  color: #16845d;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.7px;
+}
+
+.shipping-hero h1 {
+  margin: 0 0 18px;
+  color: #183b35;
+  font-size: clamp(36px, 5vw, 52px);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.shipping-hero h1 span {
+  color: #159568;
+}
+
+.shipping-hero > .shipping-container > p {
+  max-width: 650px;
+  margin: 0 auto 22px;
+  color: #687b72;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.shipping-updated {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #63786c;
+  font-size: 12px;
+}
+
+/* Main content */
+
+.shipping-content {
+  padding-top: 50px;
+  padding-bottom: 70px;
+}
+
+/* Notice */
+
+.shipping-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 23px;
+  border: 1px solid #d6ecdf;
+  border-radius: 13px;
+  background: #f1faf4;
+  color: #13865e;
+}
+
+.shipping-notice > svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.shipping-notice h2 {
+  margin: 0 0 8px;
+  color: #21443a;
+  font-size: 16px;
+}
+
+.shipping-notice p {
+  margin: 0;
+  color: #60746a;
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+/* Introduction */
+
+.shipping-intro {
+  margin: 42px 0 32px;
+}
+
+.shipping-intro h2 {
+  margin: 0 0 12px;
+  color: #183b35;
+  font-size: 24px;
+}
+
+.shipping-intro p {
+  margin: 0;
+  color: #65786e;
+  font-size: 14px;
+  line-height: 1.95;
+}
+
+/* Policy sections */
+
+.shipping-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.shipping-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 27px;
+  border: 1px solid #e5eee8;
+  border-radius: 14px;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.shipping-section:hover {
+  border-color: #c8e5d3;
+  box-shadow: 0 7px 24px rgba(26, 73, 54, 0.045);
+}
+
+.shipping-section-icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 49px;
+  height: 49px;
+  border-radius: 13px;
+  background: #e9f7ef;
+  color: #13865e;
+}
+
+.shipping-section-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.shipping-section-number {
+  display: inline-block;
+  margin-bottom: 7px;
+  color: #16845d;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+}
+
+.shipping-section-body h2 {
+  margin: 0 0 14px;
+  color: #21443a;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.shipping-section-body ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding-left: 19px;
+}
+
+.shipping-section-body li {
+  padding-left: 3px;
+  color: #65786e;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.shipping-section-body li::marker {
+  color: #159568;
+}
+
+/* Address reminder */
+
+.shipping-address-note {
+  margin-top: 30px;
+  padding: 25px;
+  border-left: 4px solid #159568;
+  border-radius: 0 12px 12px 0;
+  background: #f6faf7;
+}
+
+.shipping-address-note h2 {
+  margin: 0 0 10px;
+  color: #21443a;
+  font-size: 18px;
+}
+
+.shipping-address-note p {
+  margin: 0;
+  color: #65786e;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+/* Contact support card */
+
+.shipping-help-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 35px;
+  padding: 27px;
+  border: 1px solid #dceee3;
+  border-radius: 15px;
+  background: linear-gradient(120deg, #eff9f2, #f8fcf9);
+}
+
+.shipping-help-icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: #dff3e6;
+  color: #13865e;
+}
+
+.shipping-help-text {
+  flex: 1;
+}
+
+.shipping-help-text h2 {
+  margin: 0 0 8px;
+  color: #21443a;
+  font-size: 18px;
+}
+
+.shipping-help-text p {
+  margin: 0;
+  color: #65786e;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.shipping-help-button {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border-radius: 8px;
+  background: #13865e;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.shipping-help-button:hover {
+  background: #0d6d4b;
+}
+
+/* Closing note */
+
+.shipping-footer-note {
+  margin: 28px 0 0;
+  color: #7a8980;
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+/* Tablet */
+
+@media (max-width: 700px) {
+  .shipping-content {
+    padding-top: 35px;
+    padding-bottom: 45px;
+  }
+
+  .shipping-help-card {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .shipping-help-text {
+    flex-basis: calc(100% - 75px);
+  }
+
+  .shipping-help-button {
+    margin-left: 72px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 480px) {
+  .shipping-container {
+    width: calc(100% - 28px);
+  }
+
+  .shipping-hero {
+    padding: 48px 0 50px;
+  }
+
+  .shipping-hero > .shipping-container > p {
+    font-size: 13px;
+  }
+
+  .shipping-content {
+    padding-top: 28px;
+  }
+
+  .shipping-notice {
+    gap: 12px;
+    padding: 18px;
+  }
+
+  .shipping-intro {
+    margin-top: 30px;
+  }
+
+  .shipping-intro h2 {
+    font-size: 21px;
+  }
+
+  .shipping-intro p {
+    font-size: 13px;
+  }
+
+  .shipping-section {
+    gap: 13px;
+    padding: 18px 15px;
+  }
+
+  .shipping-section-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+  }
+
+  .shipping-section-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .shipping-section-body h2 {
+    font-size: 17px;
+  }
+
+  .shipping-section-body li {
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  .shipping-address-note {
+    padding: 20px 17px;
+  }
+
+  .shipping-help-card {
+    gap: 13px;
+    padding: 19px 16px;
+  }
+
+  .shipping-help-text {
+    flex-basis: calc(100% - 65px);
+  }
+
+  .shipping-help-text h2 {
+    font-size: 16px;
+  }
+
+  .shipping-help-button {
+    margin-left: 65px;
+  }
+}
